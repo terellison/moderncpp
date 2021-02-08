@@ -1,0 +1,2851 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Modern C++ Snippets">
+      
+      
+      
+      
+        <link rel="canonical" href="https://alandefreitas.github.io/moderncpp/guis/imgui/">
+      
+      <link rel="shortcut icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-6.2.8">
+    
+    
+      
+        <title>IMGUI - Modern C++</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.cb6bc1d0.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.39b8e14a.min.css">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
+      
+    
+    
+    
+    
+      
+        
+<script>window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","UA-109858331-3","auto"),ga("set","anonymizeIp",!0),ga("send","pageview"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){if(this.value){var e=document.location.pathname;ga("send","pageview",e+"?q="+this.value)}})}),document.addEventListener("DOMContentSwitch",function(){ga("send","pageview",document.location.pathname)})</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+      
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="preference" data-md-color-primary="" data-md-color-accent="">
+      
+        <script>matchMedia("(prefers-color-scheme: dark)").matches&&document.body.setAttribute("data-md-color-scheme","slate")</script>
+      
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#imgui" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid" aria-label="Header">
+    <a href="https://alandefreitas.github.io/moderncpp/" title="Modern C++" class="md-header-nav__button md-logo" aria-label="Modern C++">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header-nav__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header-nav__title" data-md-component="header-title">
+      <div class="md-header-nav__ellipsis">
+        <div class="md-header-nav__topic">
+          <span class="md-ellipsis">
+            Modern C++
+          </span>
+        </div>
+        <div class="md-header-nav__topic">
+          <span class="md-ellipsis">
+            
+              IMGUI
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      <label class="md-header-nav__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" data-md-component="search-reset" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header-nav__source">
+        
+<a href="https://github.com/alandefreitas/moderncpp" title="Go to repository" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    alandefreitas/moderncpp
+  </div>
+</a>
+      </div>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="https://alandefreitas.github.io/moderncpp/" title="Modern C++" class="md-nav__button md-logo" aria-label="Modern C++">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    Modern C++
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/alandefreitas/moderncpp" title="Go to repository" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    alandefreitas/moderncpp
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../quick-start/" class="md-nav__link">
+        Quick Start
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3" >
+      
+      <label class="md-nav__link" for="nav-3">
+        Basic Syntax
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Basic Syntax" data-md-level="1">
+        <label class="md-nav__title" for="nav-3">
+          <span class="md-nav__icon md-icon"></span>
+          Basic Syntax
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3-1" type="checkbox" id="nav-3-1" >
+      
+      <label class="md-nav__link" for="nav-3-1">
+        Input / Output
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Input / Output" data-md-level="2">
+        <label class="md-nav__title" for="nav-3-1">
+          <span class="md-nav__icon md-icon"></span>
+          Input / Output
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../basic-syntax/input--output/build-script/" class="md-nav__link">
+        Build script
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../basic-syntax/input--output/hello-world/" class="md-nav__link">
+        Hello World
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../basic-syntax/input--output/input/" class="md-nav__link">
+        Input
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../basic-syntax/input--output/output/" class="md-nav__link">
+        Output
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../basic-syntax/input--output/format/" class="md-nav__link">
+        Format
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../basic-syntax/input--output/tabulate/" class="md-nav__link">
+        Tabulate
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3-2" type="checkbox" id="nav-3-2" >
+      
+      <label class="md-nav__link" for="nav-3-2">
+        Control flow
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Control flow" data-md-level="2">
+        <label class="md-nav__title" for="nav-3-2">
+          <span class="md-nav__icon md-icon"></span>
+          Control flow
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../basic-syntax/control-flow/build-script/" class="md-nav__link">
+        Build script
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../basic-syntax/control-flow/sequential/" class="md-nav__link">
+        Sequential
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../basic-syntax/control-flow/conditional/" class="md-nav__link">
+        Conditional
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../basic-syntax/control-flow/loops/" class="md-nav__link">
+        Loops
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3-3" type="checkbox" id="nav-3-3" >
+      
+      <label class="md-nav__link" for="nav-3-3">
+        Data types
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Data types" data-md-level="2">
+        <label class="md-nav__title" for="nav-3-3">
+          <span class="md-nav__icon md-icon"></span>
+          Data types
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../basic-syntax/data-types/build-script/" class="md-nav__link">
+        Build script
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../basic-syntax/data-types/fundamental-data-types/" class="md-nav__link">
+        Fundamental Data Types
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../basic-syntax/data-types/operators/" class="md-nav__link">
+        Operators
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../basic-syntax/data-types/auto/" class="md-nav__link">
+        Auto
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../basic-syntax/data-types/constants/" class="md-nav__link">
+        Constants
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3-4" type="checkbox" id="nav-3-4" >
+      
+      <label class="md-nav__link" for="nav-3-4">
+        Basic Data Types
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Basic Data Types" data-md-level="2">
+        <label class="md-nav__title" for="nav-3-4">
+          <span class="md-nav__icon md-icon"></span>
+          Basic Data Types
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../basic-syntax/basic-data-types/build-script/" class="md-nav__link">
+        Build script
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../basic-syntax/basic-data-types/raw-arrays/" class="md-nav__link">
+        Raw arrays
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../basic-syntax/basic-data-types/arrays/" class="md-nav__link">
+        Arrays
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../basic-syntax/basic-data-types/vectors/" class="md-nav__link">
+        Vectors
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../basic-syntax/basic-data-types/strings/" class="md-nav__link">
+        Strings
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../basic-syntax/basic-data-types/move/" class="md-nav__link">
+        Move
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../basic-syntax/basic-data-types/aggregate-initialization/" class="md-nav__link">
+        Aggregate initialization
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../basic-syntax/basic-data-types/structured-binding/" class="md-nav__link">
+        Structured binding
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3-5" type="checkbox" id="nav-3-5" >
+      
+      <label class="md-nav__link" for="nav-3-5">
+        Pointers
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Pointers" data-md-level="2">
+        <label class="md-nav__title" for="nav-3-5">
+          <span class="md-nav__icon md-icon"></span>
+          Pointers
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../basic-syntax/pointers/build-script/" class="md-nav__link">
+        Build script
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../basic-syntax/pointers/raw-pointers/" class="md-nav__link">
+        Raw Pointers
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../basic-syntax/pointers/smart-pointers/" class="md-nav__link">
+        Smart pointers
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3-6" type="checkbox" id="nav-3-6" >
+      
+      <label class="md-nav__link" for="nav-3-6">
+        Functions
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Functions" data-md-level="2">
+        <label class="md-nav__title" for="nav-3-6">
+          <span class="md-nav__icon md-icon"></span>
+          Functions
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../basic-syntax/functions/build-script/" class="md-nav__link">
+        Build script
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../basic-syntax/functions/function/" class="md-nav__link">
+        Function
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../basic-syntax/functions/lambda/" class="md-nav__link">
+        Lambda
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3-7" type="checkbox" id="nav-3-7" >
+      
+      <label class="md-nav__link" for="nav-3-7">
+        Files
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Files" data-md-level="2">
+        <label class="md-nav__title" for="nav-3-7">
+          <span class="md-nav__icon md-icon"></span>
+          Files
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../basic-syntax/files/build-script/" class="md-nav__link">
+        Build script
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../basic-syntax/files/file-streams/" class="md-nav__link">
+        File streams
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../basic-syntax/files/filesystem/" class="md-nav__link">
+        Filesystem
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4" >
+      
+      <label class="md-nav__link" for="nav-4">
+        Algorithms / Data Structures
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Algorithms / Data Structures" data-md-level="1">
+        <label class="md-nav__title" for="nav-4">
+          <span class="md-nav__icon md-icon"></span>
+          Algorithms / Data Structures
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4-1" type="checkbox" id="nav-4-1" >
+      
+      <label class="md-nav__link" for="nav-4-1">
+        Date and time
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Date and time" data-md-level="2">
+        <label class="md-nav__title" for="nav-4-1">
+          <span class="md-nav__icon md-icon"></span>
+          Date and time
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../algorithms--data-structures/date-and-time/build-script/" class="md-nav__link">
+        Build script
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../algorithms--data-structures/date-and-time/clock/" class="md-nav__link">
+        Clock
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../algorithms--data-structures/date-and-time/datetime/" class="md-nav__link">
+        Datetime
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4-2" type="checkbox" id="nav-4-2" >
+      
+      <label class="md-nav__link" for="nav-4-2">
+        Random
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Random" data-md-level="2">
+        <label class="md-nav__title" for="nav-4-2">
+          <span class="md-nav__icon md-icon"></span>
+          Random
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../algorithms--data-structures/random/build-script/" class="md-nav__link">
+        Build script
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../algorithms--data-structures/random/random/" class="md-nav__link">
+        Random
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../algorithms--data-structures/random/pcg/" class="md-nav__link">
+        PCG
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4-3" type="checkbox" id="nav-4-3" >
+      
+      <label class="md-nav__link" for="nav-4-3">
+        Template
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Template" data-md-level="2">
+        <label class="md-nav__title" for="nav-4-3">
+          <span class="md-nav__icon md-icon"></span>
+          Template
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../algorithms--data-structures/template/build-script/" class="md-nav__link">
+        Build script
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../algorithms--data-structures/template/template-function/" class="md-nav__link">
+        Template function
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../algorithms--data-structures/template/template-aliases/" class="md-nav__link">
+        Template aliases
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../algorithms--data-structures/template/concepts/" class="md-nav__link">
+        Concepts
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../algorithms--data-structures/template/sfinae/" class="md-nav__link">
+        SFINAE
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4-4" type="checkbox" id="nav-4-4" >
+      
+      <label class="md-nav__link" for="nav-4-4">
+        Algorithm
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Algorithm" data-md-level="2">
+        <label class="md-nav__title" for="nav-4-4">
+          <span class="md-nav__icon md-icon"></span>
+          Algorithm
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../algorithms--data-structures/algorithm/build-script/" class="md-nav__link">
+        Build script
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../algorithms--data-structures/algorithm/searching/" class="md-nav__link">
+        Searching
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../algorithms--data-structures/algorithm/sorting/" class="md-nav__link">
+        Sorting
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../algorithms--data-structures/algorithm/basic-algorithms/" class="md-nav__link">
+        Basic Algorithms
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../algorithms--data-structures/algorithm/ranges/" class="md-nav__link">
+        Ranges
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4-5" type="checkbox" id="nav-4-5" >
+      
+      <label class="md-nav__link" for="nav-4-5">
+        Data structures
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Data structures" data-md-level="2">
+        <label class="md-nav__title" for="nav-4-5">
+          <span class="md-nav__icon md-icon"></span>
+          Data structures
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../algorithms--data-structures/data-structures/build-script/" class="md-nav__link">
+        Build script
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../algorithms--data-structures/data-structures/sequential-containers/" class="md-nav__link">
+        Sequential Containers
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../algorithms--data-structures/data-structures/associative-containers/" class="md-nav__link">
+        Associative Containers
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../algorithms--data-structures/data-structures/memory-resource/" class="md-nav__link">
+        Memory resource
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../algorithms--data-structures/data-structures/span/" class="md-nav__link">
+        Span
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../algorithms--data-structures/data-structures/bitset/" class="md-nav__link">
+        Bitset
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../algorithms--data-structures/data-structures/spatial-containers/" class="md-nav__link">
+        Spatial Containers
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4-6" type="checkbox" id="nav-4-6" >
+      
+      <label class="md-nav__link" for="nav-4-6">
+        Heterogeneous Types
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Heterogeneous Types" data-md-level="2">
+        <label class="md-nav__title" for="nav-4-6">
+          <span class="md-nav__icon md-icon"></span>
+          Heterogeneous Types
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../algorithms--data-structures/heterogeneous-types/build-script/" class="md-nav__link">
+        Build script
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../algorithms--data-structures/heterogeneous-types/tuples/" class="md-nav__link">
+        Tuples
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../algorithms--data-structures/heterogeneous-types/any/" class="md-nav__link">
+        Any
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../algorithms--data-structures/heterogeneous-types/optional/" class="md-nav__link">
+        Optional
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../algorithms--data-structures/heterogeneous-types/variant/" class="md-nav__link">
+        Variant
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5" >
+      
+      <label class="md-nav__link" for="nav-5">
+        Programming Paradigms
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Programming Paradigms" data-md-level="1">
+        <label class="md-nav__title" for="nav-5">
+          <span class="md-nav__icon md-icon"></span>
+          Programming Paradigms
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-5-1" type="checkbox" id="nav-5-1" >
+      
+      <label class="md-nav__link" for="nav-5-1">
+        Basic Paradigms
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Basic Paradigms" data-md-level="2">
+        <label class="md-nav__title" for="nav-5-1">
+          <span class="md-nav__icon md-icon"></span>
+          Basic Paradigms
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../programming-paradigms/basic-paradigms/build-script/" class="md-nav__link">
+        Build script
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../programming-paradigms/basic-paradigms/polymorphism/" class="md-nav__link">
+        Polymorphism
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../programming-paradigms/basic-paradigms/shared-from-this/" class="md-nav__link">
+        Shared from this
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../programming-paradigms/basic-paradigms/metaprogramming/" class="md-nav__link">
+        Metaprogramming
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../programming-paradigms/basic-paradigms/crtp/" class="md-nav__link">
+        CRTP
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../programming-paradigms/basic-paradigms/sfinae/" class="md-nav__link">
+        SFINAE
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-5-2" type="checkbox" id="nav-5-2" >
+      
+      <label class="md-nav__link" for="nav-5-2">
+        Parallelism
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Parallelism" data-md-level="2">
+        <label class="md-nav__title" for="nav-5-2">
+          <span class="md-nav__icon md-icon"></span>
+          Parallelism
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../programming-paradigms/parallelism/build-script/" class="md-nav__link">
+        Build script
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../programming-paradigms/parallelism/execution-policies/" class="md-nav__link">
+        Execution Policies
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../programming-paradigms/parallelism/threads/" class="md-nav__link">
+        Threads
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../programming-paradigms/parallelism/executors/" class="md-nav__link">
+        Executors
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../programming-paradigms/parallelism/timers/" class="md-nav__link">
+        Timers
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../programming-paradigms/parallelism/signals/" class="md-nav__link">
+        Signals
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../programming-paradigms/parallelism/async/" class="md-nav__link">
+        Async++
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6" >
+      
+      <label class="md-nav__link" for="nav-6">
+        Utilities
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Utilities" data-md-level="1">
+        <label class="md-nav__title" for="nav-6">
+          <span class="md-nav__icon md-icon"></span>
+          Utilities
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-6-1" type="checkbox" id="nav-6-1" >
+      
+      <label class="md-nav__link" for="nav-6-1">
+        Regular Expressions
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Regular Expressions" data-md-level="2">
+        <label class="md-nav__title" for="nav-6-1">
+          <span class="md-nav__icon md-icon"></span>
+          Regular Expressions
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../utilities/regular-expressions/build-script/" class="md-nav__link">
+        Build script
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../utilities/regular-expressions/regex/" class="md-nav__link">
+        Regex
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-6-2" type="checkbox" id="nav-6-2" >
+      
+      <label class="md-nav__link" for="nav-6-2">
+        Networking
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Networking" data-md-level="2">
+        <label class="md-nav__title" for="nav-6-2">
+          <span class="md-nav__icon md-icon"></span>
+          Networking
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../utilities/networking/build-script/" class="md-nav__link">
+        Build script
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../utilities/networking/network/" class="md-nav__link">
+        Network
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../utilities/networking/async-network/" class="md-nav__link">
+        Async Network
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../utilities/networking/http-server/" class="md-nav__link">
+        Http server
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7" checked>
+      
+      <label class="md-nav__link" for="nav-7">
+        GUIs
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="GUIs" data-md-level="1">
+        <label class="md-nav__title" for="nav-7">
+          <span class="md-nav__icon md-icon"></span>
+          GUIs
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../build-script/" class="md-nav__link">
+        Build script
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../qt/" class="md-nav__link">
+        Qt
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../opengl--sdl/" class="md-nav__link">
+        OpenGL + SDL
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../opengl--glfw/" class="md-nav__link">
+        OpenGL + GLFW
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+        
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        IMGUI
+      </a>
+      
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../webview/" class="md-nav__link">
+        Webview
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../system-tray/" class="md-nav__link">
+        System tray
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-8" type="checkbox" id="nav-8" >
+      
+      <label class="md-nav__link" for="nav-8">
+        Testing
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Testing" data-md-level="1">
+        <label class="md-nav__title" for="nav-8">
+          <span class="md-nav__icon md-icon"></span>
+          Testing
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../testing/build-script/" class="md-nav__link">
+        Build script
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../testing/catch2/" class="md-nav__link">
+        Catch2
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../testing/boostut/" class="md-nav__link">
+        boost.ut
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../testing/source-location/" class="md-nav__link">
+        Source Location
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../testing/plots/" class="md-nav__link">
+        Plots
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cmake-functions/" class="md-nav__link">
+        CMake functions
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-10" type="checkbox" id="nav-10" >
+      
+      <label class="md-nav__link" for="nav-10">
+        Installing a C++20 compiler
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Installing a C++20 compiler" data-md-level="1">
+        <label class="md-nav__title" for="nav-10">
+          <span class="md-nav__icon md-icon"></span>
+          Installing a C++20 compiler
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../installing-a-c20-compiler/" class="md-nav__link">
+        Introduction
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../installing-a-c20-compiler/linux/" class="md-nav__link">
+        Linux
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../installing-a-c20-compiler/mac-os/" class="md-nav__link">
+        Mac OS
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../installing-a-c20-compiler/windows/" class="md-nav__link">
+        Windows
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../faq/" class="md-nav__link">
+        FAQ
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../get-involved/" class="md-nav__link">
+        Get involved
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                <h1 id="imgui">IMGUI</h1>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>  1
+  2
+  3
+  4
+  5
+  6
+  7
+  8
+  9
+ 10
+ 11
+ 12
+ 13
+ 14
+ 15
+ 16
+ 17
+ 18
+ 19
+ 20
+ 21
+ 22
+ 23
+ 24
+ 25
+ 26
+ 27
+ 28
+ 29
+ 30
+ 31
+ 32
+ 33
+ 34
+ 35
+ 36
+ 37
+ 38
+ 39
+ 40
+ 41
+ 42
+ 43
+ 44
+ 45
+ 46
+ 47
+ 48
+ 49
+ 50
+ 51
+ 52
+ 53
+ 54
+ 55
+ 56
+ 57
+ 58
+ 59
+ 60
+ 61
+ 62
+ 63
+ 64
+ 65
+ 66
+ 67
+ 68
+ 69
+ 70
+ 71
+ 72
+ 73
+ 74
+ 75
+ 76
+ 77
+ 78
+ 79
+ 80
+ 81
+ 82
+ 83
+ 84
+ 85
+ 86
+ 87
+ 88
+ 89
+ 90
+ 91
+ 92
+ 93
+ 94
+ 95
+ 96
+ 97
+ 98
+ 99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="c1">// dear imgui: standalone example application for GLFW + OpenGL 3, using</span>
+<span class="c1">// programmable pipeline If you are new to dear imgui, see examples/README.txt</span>
+<span class="c1">// and documentation at the top of imgui.cpp. (GLFW is a cross-platform general</span>
+<span class="c1">// purpose library for handling windows, inputs, OpenGL/Vulkan/Metal graphics</span>
+<span class="c1">// context creation, etc.)</span>
+
+<span class="cp">#include</span> <span class="cpf">&quot;examples/imgui_impl_glfw.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;examples/imgui_impl_opengl3.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;imgui.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp"></span>
+
+<span class="c1">// About Desktop OpenGL function loaders:</span>
+<span class="c1">//  Modern desktop OpenGL doesn&#39;t have a standard portable header file to load</span>
+<span class="c1">//  OpenGL function pointers. Helper libraries are often used for this purpose!</span>
+<span class="c1">//  Here we are supporting a few common ones (gl3w, glew, glad). You may use</span>
+<span class="c1">//  another loader/header of your choice (glext, glLoadGen, etc.), or chose to</span>
+<span class="c1">//  manually implement your own.</span>
+<span class="cp">#if defined(IMGUI_IMPL_OPENGL_LOADER_GL3W)</span>
+<span class="cp">#include</span> <span class="cpf">&lt;GL/gl3w.h&gt;</span><span class="c1"> // Initialize with gl3wInit()</span><span class="cp"></span>
+<span class="cp">#elif defined(IMGUI_IMPL_OPENGL_LOADER_GLEW)</span>
+<span class="cp">#include</span> <span class="cpf">&lt;GL/glew.h&gt;</span><span class="c1"> // Initialize with glewInit()</span><span class="cp"></span>
+<span class="cp">#elif defined(IMGUI_IMPL_OPENGL_LOADER_GLAD)</span>
+<span class="cp">#include</span> <span class="cpf">&lt;glad/glad.h&gt;</span><span class="c1"> // Initialize with gladLoadGL()</span><span class="cp"></span>
+<span class="cp">#elif defined(IMGUI_IMPL_OPENGL_LOADER_GLBINDING2)</span>
+<span class="cp">#define GLFW_INCLUDE_NONE </span><span class="c1">// GLFW including OpenGL headers causes ambiguity or</span>
+                          <span class="c1">// multiple definition errors.</span>
+<span class="cp">#include</span> <span class="cpf">&lt;glbinding/Binding.h&gt;</span><span class="c1"> // Initialize with glbinding::Binding::initialize()</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;glbinding/gl/gl.h&gt;</span><span class="cp"></span>
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">gl</span><span class="p">;</span>
+<span class="cp">#elif defined(IMGUI_IMPL_OPENGL_LOADER_GLBINDING3)</span>
+<span class="cp">#define GLFW_INCLUDE_NONE </span><span class="c1">// GLFW including OpenGL headers causes ambiguity or</span>
+                          <span class="c1">// multiple definition errors.</span>
+<span class="cp">#include</span> <span class="cpf">&lt;glbinding/gl/gl.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;glbinding/glbinding.h&gt;</span><span class="c1"> // Initialize with glbinding::initialize()</span><span class="cp"></span>
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">gl</span><span class="p">;</span>
+<span class="cp">#else</span>
+<span class="cp">#include IMGUI_IMPL_OPENGL_LOADER_CUSTOM</span>
+<span class="cp">#endif</span>
+
+<span class="c1">// Include glfw3.h after our OpenGL definitions</span>
+<span class="cp">#include</span> <span class="cpf">&lt;GLFW/glfw3.h&gt;</span><span class="cp"></span>
+
+<span class="c1">// [Win32] Our example includes a copy of glfw3.lib pre-compiled with VS2010 to</span>
+<span class="c1">// maximize ease of testing and compatibility with old VS compilers. To link</span>
+<span class="c1">// with VS2010-era libraries, VS2015+ requires linking with</span>
+<span class="c1">// legacy_stdio_definitions.lib, which we do using this pragma. Your own project</span>
+<span class="c1">// should not be affected, as you are likely to link with a newer binary of GLFW</span>
+<span class="c1">// that is adequate for your version of Visual Studio.</span>
+<span class="cp">#if defined(_MSC_VER) &amp;&amp; (_MSC_VER &gt;= 1900) &amp;&amp;                                 \</span>
+<span class="cp">    !defined(IMGUI_DISABLE_WIN32_FUNCTIONS)</span>
+<span class="cp">#pragma comment(lib, &quot;legacy_stdio_definitions&quot;)</span>
+<span class="cp">#endif</span>
+
+<span class="k">static</span> <span class="kt">void</span> <span class="n">glfw_error_callback</span><span class="p">(</span><span class="kt">int</span> <span class="n">error</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">description</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span> <span class="s">&quot;Glfw Error %d: %s</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">error</span><span class="p">,</span> <span class="n">description</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="n">main</span><span class="p">(</span><span class="kt">int</span><span class="p">,</span> <span class="kt">char</span> <span class="o">**</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// Setup window</span>
+    <span class="n">glfwSetErrorCallback</span><span class="p">(</span><span class="n">glfw_error_callback</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">glfwInit</span><span class="p">())</span>
+        <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+
+        <span class="c1">// Decide GL+GLSL versions</span>
+<span class="cp">#if __APPLE__</span>
+    <span class="c1">// GL 3.2 + GLSL 150</span>
+    <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">glsl_version</span> <span class="o">=</span> <span class="s">&quot;#version 150&quot;</span><span class="p">;</span>
+    <span class="n">glfwWindowHint</span><span class="p">(</span><span class="n">GLFW_CONTEXT_VERSION_MAJOR</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span>
+    <span class="n">glfwWindowHint</span><span class="p">(</span><span class="n">GLFW_CONTEXT_VERSION_MINOR</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>
+    <span class="n">glfwWindowHint</span><span class="p">(</span><span class="n">GLFW_OPENGL_PROFILE</span><span class="p">,</span> <span class="n">GLFW_OPENGL_CORE_PROFILE</span><span class="p">);</span> <span class="c1">// 3.2+ only</span>
+    <span class="n">glfwWindowHint</span><span class="p">(</span><span class="n">GLFW_OPENGL_FORWARD_COMPAT</span><span class="p">,</span> <span class="n">GL_TRUE</span><span class="p">);</span> <span class="c1">// Required on Mac</span>
+<span class="cp">#else</span>
+    <span class="c1">// GL 3.0 + GLSL 130</span>
+    <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">glsl_version</span> <span class="o">=</span> <span class="s">&quot;#version 130&quot;</span><span class="p">;</span>
+    <span class="n">glfwWindowHint</span><span class="p">(</span><span class="n">GLFW_CONTEXT_VERSION_MAJOR</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span>
+    <span class="n">glfwWindowHint</span><span class="p">(</span><span class="n">GLFW_CONTEXT_VERSION_MINOR</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+    <span class="c1">// glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);  // 3.2+</span>
+    <span class="c1">// only glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // 3.0+ only</span>
+<span class="cp">#endif</span>
+
+    <span class="c1">// Create window with graphics context</span>
+    <span class="n">GLFWwindow</span> <span class="o">*</span><span class="n">window</span> <span class="o">=</span> <span class="n">glfwCreateWindow</span><span class="p">(</span>
+        <span class="mi">1280</span><span class="p">,</span> <span class="mi">720</span><span class="p">,</span> <span class="s">&quot;Dear ImGui GLFW+OpenGL3 example&quot;</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">window</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span>
+        <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="n">glfwMakeContextCurrent</span><span class="p">(</span><span class="n">window</span><span class="p">);</span>
+    <span class="n">glfwSwapInterval</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span> <span class="c1">// Enable vsync</span>
+
+    <span class="c1">// Initialize OpenGL loader</span>
+<span class="cp">#if defined(IMGUI_IMPL_OPENGL_LOADER_GL3W)</span>
+    <span class="kt">bool</span> <span class="n">err</span> <span class="o">=</span> <span class="n">gl3wInit</span><span class="p">()</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="cp">#elif defined(IMGUI_IMPL_OPENGL_LOADER_GLEW)</span>
+    <span class="kt">bool</span> <span class="n">err</span> <span class="o">=</span> <span class="n">glewInit</span><span class="p">()</span> <span class="o">!=</span> <span class="n">GLEW_OK</span><span class="p">;</span>
+<span class="cp">#elif defined(IMGUI_IMPL_OPENGL_LOADER_GLAD)</span>
+    <span class="kt">bool</span> <span class="n">err</span> <span class="o">=</span> <span class="n">gladLoadGL</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">;</span>
+<span class="cp">#elif defined(IMGUI_IMPL_OPENGL_LOADER_GLBINDING2)</span>
+    <span class="kt">bool</span> <span class="n">err</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+    <span class="n">glbinding</span><span class="o">::</span><span class="n">Binding</span><span class="o">::</span><span class="n">initialize</span><span class="p">();</span>
+<span class="cp">#elif defined(IMGUI_IMPL_OPENGL_LOADER_GLBINDING3)</span>
+    <span class="kt">bool</span> <span class="n">err</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+    <span class="n">glbinding</span><span class="o">::</span><span class="n">initialize</span><span class="p">([](</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">name</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">glbinding</span><span class="o">::</span><span class="n">ProcAddress</span><span class="p">)</span><span class="n">glfwGetProcAddress</span><span class="p">(</span><span class="n">name</span><span class="p">);</span>
+    <span class="p">});</span>
+<span class="cp">#else</span>
+    <span class="kt">bool</span> <span class="n">err</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span> <span class="c1">// If you use IMGUI_IMPL_OPENGL_LOADER_CUSTOM, your loader</span>
+                      <span class="c1">// is likely to requires some form of initialization.</span>
+<span class="cp">#endif</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">err</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span> <span class="s">&quot;Failed to initialize OpenGL loader!</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+        <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="c1">// Setup Dear ImGui context</span>
+    <span class="n">IMGUI_CHECKVERSION</span><span class="p">();</span>
+    <span class="n">ImGui</span><span class="o">::</span><span class="n">CreateContext</span><span class="p">();</span>
+    <span class="n">ImGuiIO</span> <span class="o">&amp;</span><span class="n">io</span> <span class="o">=</span> <span class="n">ImGui</span><span class="o">::</span><span class="n">GetIO</span><span class="p">();</span>
+    <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">io</span><span class="p">;</span>
+    <span class="c1">// io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable</span>
+    <span class="c1">// Keyboard Controls io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad; //</span>
+    <span class="c1">// Enable Gamepad Controls</span>
+
+    <span class="c1">// Setup Dear ImGui style</span>
+    <span class="n">ImGui</span><span class="o">::</span><span class="n">StyleColorsDark</span><span class="p">();</span>
+    <span class="c1">// ImGui::StyleColorsClassic();</span>
+
+    <span class="c1">// Setup Platform/Renderer bindings</span>
+    <span class="n">ImGui_ImplGlfw_InitForOpenGL</span><span class="p">(</span><span class="n">window</span><span class="p">,</span> <span class="nb">true</span><span class="p">);</span>
+    <span class="n">ImGui_ImplOpenGL3_Init</span><span class="p">(</span><span class="n">glsl_version</span><span class="p">);</span>
+
+    <span class="c1">// Load Fonts</span>
+    <span class="c1">// - If no fonts are loaded, dear imgui will use the default font. You can</span>
+    <span class="c1">// also load multiple fonts and use ImGui::PushFont()/PopFont() to select</span>
+    <span class="c1">// them.</span>
+    <span class="c1">// - AddFontFromFileTTF() will return the ImFont* so you can store it if you</span>
+    <span class="c1">// need to select the font among multiple.</span>
+    <span class="c1">// - If the file cannot be loaded, the function will return NULL. Please</span>
+    <span class="c1">// handle those errors in your application (e.g. use an assertion, or</span>
+    <span class="c1">// display an error and quit).</span>
+    <span class="c1">// - The fonts will be rasterized at a given size (w/ oversampling) and</span>
+    <span class="c1">// stored into a texture when calling</span>
+    <span class="c1">// ImFontAtlas::Build()/GetTexDataAsXXXX(), which ImGui_ImplXXXX_NewFrame</span>
+    <span class="c1">// below will call.</span>
+    <span class="c1">// - Read &#39;docs/FONTS.txt&#39; for more instructions and details.</span>
+    <span class="c1">// - Remember that in C/C++ if you want to include a backslash \ in a string</span>
+    <span class="c1">// literal you need to write a double backslash \\ !</span>
+    <span class="c1">// io.Fonts-&gt;AddFontDefault();</span>
+    <span class="c1">// io.Fonts-&gt;AddFontFromFileTTF(&quot;../../misc/fonts/Roboto-Medium.ttf&quot;, 16.0f);</span>
+    <span class="c1">// io.Fonts-&gt;AddFontFromFileTTF(&quot;../../misc/fonts/Cousine-Regular.ttf&quot;, 15.0f);</span>
+    <span class="c1">// io.Fonts-&gt;AddFontFromFileTTF(&quot;../../misc/fonts/DroidSans.ttf&quot;, 16.0f);</span>
+    <span class="c1">// io.Fonts-&gt;AddFontFromFileTTF(&quot;../../misc/fonts/ProggyTiny.ttf&quot;, 10.0f);</span>
+    <span class="c1">// ImFont* font =</span>
+    <span class="c1">// io.Fonts-&gt;AddFontFromFileTTF(&quot;c:\\Windows\\Fonts\\ArialUni.ttf&quot;, 18.0f,</span>
+    <span class="c1">// NULL, io.Fonts-&gt;GetGlyphRangesJapanese()); IM_ASSERT(font != NULL);</span>
+
+    <span class="c1">// Our state</span>
+    <span class="kt">bool</span> <span class="n">show_demo_window</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+    <span class="kt">bool</span> <span class="n">show_another_window</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+    <span class="n">ImVec4</span> <span class="n">clear_color</span> <span class="o">=</span> <span class="n">ImVec4</span><span class="p">(</span><span class="mf">0.45f</span><span class="p">,</span> <span class="mf">0.55f</span><span class="p">,</span> <span class="mf">0.60f</span><span class="p">,</span> <span class="mf">1.00f</span><span class="p">);</span>
+
+    <span class="c1">// Main loop</span>
+    <span class="k">while</span> <span class="p">(</span><span class="o">!</span><span class="n">glfwWindowShouldClose</span><span class="p">(</span><span class="n">window</span><span class="p">))</span> <span class="p">{</span>
+        <span class="c1">// Poll and handle events (inputs, window resize, etc.)</span>
+        <span class="c1">// You can read the io.WantCaptureMouse, io.WantCaptureKeyboard flags to</span>
+        <span class="c1">// tell if dear imgui wants to use your inputs.</span>
+        <span class="c1">// - When io.WantCaptureMouse is true, do not dispatch mouse input data</span>
+        <span class="c1">// to your main application.</span>
+        <span class="c1">// - When io.WantCaptureKeyboard is true, do not dispatch keyboard input</span>
+        <span class="c1">// data to your main application. Generally you may always pass all</span>
+        <span class="c1">// inputs to dear imgui, and hide them from your application based on</span>
+        <span class="c1">// those two flags.</span>
+        <span class="n">glfwPollEvents</span><span class="p">();</span>
+
+        <span class="c1">// Start the Dear ImGui frame</span>
+        <span class="n">ImGui_ImplOpenGL3_NewFrame</span><span class="p">();</span>
+        <span class="n">ImGui_ImplGlfw_NewFrame</span><span class="p">();</span>
+        <span class="n">ImGui</span><span class="o">::</span><span class="n">NewFrame</span><span class="p">();</span>
+
+        <span class="c1">// 1. Show the big demo window (Most of the sample code is in</span>
+        <span class="c1">// ImGui::ShowDemoWindow()! You can browse its code to learn more about</span>
+        <span class="c1">// Dear ImGui!).</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">show_demo_window</span><span class="p">)</span>
+            <span class="n">ImGui</span><span class="o">::</span><span class="n">ShowDemoWindow</span><span class="p">(</span><span class="o">&amp;</span><span class="n">show_demo_window</span><span class="p">);</span>
+
+        <span class="c1">// 2. Show a simple window that we create ourselves. We use a Begin/End</span>
+        <span class="c1">// pair to created a named window.</span>
+        <span class="p">{</span>
+            <span class="k">static</span> <span class="kt">float</span> <span class="n">f</span> <span class="o">=</span> <span class="mf">0.0f</span><span class="p">;</span>
+            <span class="k">static</span> <span class="kt">int</span> <span class="n">counter</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+            <span class="n">ImGui</span><span class="o">::</span><span class="n">Begin</span><span class="p">(</span><span class="s">&quot;Hello, world!&quot;</span><span class="p">);</span> <span class="c1">// Create a window called &quot;Hello,</span>
+                                           <span class="c1">// world!&quot; and append into it.</span>
+
+            <span class="n">ImGui</span><span class="o">::</span><span class="n">Text</span><span class="p">(</span>
+                <span class="s">&quot;This is some useful text.&quot;</span><span class="p">);</span> <span class="c1">// Display some text (you can use</span>
+                                              <span class="c1">// a format strings too)</span>
+            <span class="n">ImGui</span><span class="o">::</span><span class="n">Checkbox</span><span class="p">(</span><span class="s">&quot;Demo Window&quot;</span><span class="p">,</span>
+                            <span class="o">&amp;</span><span class="n">show_demo_window</span><span class="p">);</span> <span class="c1">// Edit bools storing our window</span>
+                                                <span class="c1">// open/close state</span>
+            <span class="n">ImGui</span><span class="o">::</span><span class="n">Checkbox</span><span class="p">(</span><span class="s">&quot;Another Window&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">show_another_window</span><span class="p">);</span>
+
+            <span class="n">ImGui</span><span class="o">::</span><span class="n">SliderFloat</span><span class="p">(</span>
+                <span class="s">&quot;float&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">f</span><span class="p">,</span> <span class="mf">0.0f</span><span class="p">,</span>
+                <span class="mf">1.0f</span><span class="p">);</span> <span class="c1">// Edit 1 float using a slider from 0.0f to 1.0f</span>
+            <span class="n">ImGui</span><span class="o">::</span><span class="n">ColorEdit3</span><span class="p">(</span>
+                <span class="s">&quot;clear color&quot;</span><span class="p">,</span>
+                <span class="p">(</span><span class="kt">float</span> <span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">clear_color</span><span class="p">);</span> <span class="c1">// Edit 3 floats representing a color</span>
+
+            <span class="k">if</span> <span class="p">(</span><span class="n">ImGui</span><span class="o">::</span><span class="n">Button</span><span class="p">(</span>
+                    <span class="s">&quot;Button&quot;</span><span class="p">))</span> <span class="c1">// Buttons return true when clicked (most widgets</span>
+                               <span class="c1">// return true when edited/activated)</span>
+                <span class="n">counter</span><span class="o">++</span><span class="p">;</span>
+            <span class="n">ImGui</span><span class="o">::</span><span class="n">SameLine</span><span class="p">();</span>
+            <span class="n">ImGui</span><span class="o">::</span><span class="n">Text</span><span class="p">(</span><span class="s">&quot;counter = %d&quot;</span><span class="p">,</span> <span class="n">counter</span><span class="p">);</span>
+
+            <span class="n">ImGui</span><span class="o">::</span><span class="n">Text</span><span class="p">(</span><span class="s">&quot;Application average %.3f ms/frame (%.1f FPS)&quot;</span><span class="p">,</span>
+                        <span class="mf">1000.0f</span> <span class="o">/</span> <span class="n">ImGui</span><span class="o">::</span><span class="n">GetIO</span><span class="p">().</span><span class="n">Framerate</span><span class="p">,</span>
+                        <span class="n">ImGui</span><span class="o">::</span><span class="n">GetIO</span><span class="p">().</span><span class="n">Framerate</span><span class="p">);</span>
+            <span class="n">ImGui</span><span class="o">::</span><span class="n">End</span><span class="p">();</span>
+        <span class="p">}</span>
+
+        <span class="c1">// 3. Show another simple window.</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">show_another_window</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">ImGui</span><span class="o">::</span><span class="n">Begin</span><span class="p">(</span>
+                <span class="s">&quot;Another Window&quot;</span><span class="p">,</span>
+                <span class="o">&amp;</span><span class="n">show_another_window</span><span class="p">);</span> <span class="c1">// Pass a pointer to our bool variable</span>
+                                       <span class="c1">// (the window will have a closing button</span>
+                                       <span class="c1">// that will clear the bool when clicked)</span>
+            <span class="n">ImGui</span><span class="o">::</span><span class="n">Text</span><span class="p">(</span><span class="s">&quot;Hello from another window!&quot;</span><span class="p">);</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">ImGui</span><span class="o">::</span><span class="n">Button</span><span class="p">(</span><span class="s">&quot;Close Me&quot;</span><span class="p">))</span>
+                <span class="n">show_another_window</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+            <span class="n">ImGui</span><span class="o">::</span><span class="n">End</span><span class="p">();</span>
+        <span class="p">}</span>
+
+        <span class="c1">// Rendering</span>
+        <span class="n">ImGui</span><span class="o">::</span><span class="n">Render</span><span class="p">();</span>
+        <span class="kt">int</span> <span class="n">display_w</span><span class="p">,</span> <span class="n">display_h</span><span class="p">;</span>
+        <span class="n">glfwGetFramebufferSize</span><span class="p">(</span><span class="n">window</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">display_w</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">display_h</span><span class="p">);</span>
+        <span class="n">glViewport</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">display_w</span><span class="p">,</span> <span class="n">display_h</span><span class="p">);</span>
+        <span class="n">glClearColor</span><span class="p">(</span><span class="n">clear_color</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">clear_color</span><span class="p">.</span><span class="n">y</span><span class="p">,</span> <span class="n">clear_color</span><span class="p">.</span><span class="n">z</span><span class="p">,</span>
+                     <span class="n">clear_color</span><span class="p">.</span><span class="n">w</span><span class="p">);</span>
+        <span class="n">glClear</span><span class="p">(</span><span class="n">GL_COLOR_BUFFER_BIT</span><span class="p">);</span>
+        <span class="n">ImGui_ImplOpenGL3_RenderDrawData</span><span class="p">(</span><span class="n">ImGui</span><span class="o">::</span><span class="n">GetDrawData</span><span class="p">());</span>
+
+        <span class="n">glfwSwapBuffers</span><span class="p">(</span><span class="n">window</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="c1">// Cleanup</span>
+    <span class="n">ImGui_ImplOpenGL3_Shutdown</span><span class="p">();</span>
+    <span class="n">ImGui_ImplGlfw_Shutdown</span><span class="p">();</span>
+    <span class="n">ImGui</span><span class="o">::</span><span class="n">DestroyContext</span><span class="p">();</span>
+
+    <span class="n">glfwDestroyWindow</span><span class="p">(</span><span class="n">window</span><span class="p">);</span>
+    <span class="n">glfwTerminate</span><span class="p">();</span>
+
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+</td></tr></table>
+<p>Build script: </p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="nb">find_package</span><span class="p">(</span><span class="s">OpenGL</span><span class="p">)</span>
+<span class="nb">if</span> <span class="p">(</span><span class="s">NOT</span> <span class="s">OPENGL_FOUND</span> <span class="s">OR</span> <span class="s">NOT</span> <span class="s">EXPECTED_COMPILER</span><span class="p">)</span>
+    <span class="nb">return</span><span class="p">()</span>
+<span class="nb">endif</span> <span class="p">()</span>
+
+<span class="nb">if</span> <span class="p">(</span><span class="s">CMAKE_SYSTEM_NAME</span> <span class="s">STREQUAL</span> <span class="s">Linux</span><span class="p">)</span>
+    <span class="nb">find_package</span><span class="p">(</span><span class="s">X11</span> <span class="s">REQUIRED</span><span class="p">)</span>
+    <span class="nb">if</span> <span class="p">(</span><span class="s">NOT</span> <span class="s">X11_Xi_FOUND</span><span class="p">)</span>
+        <span class="nb">message</span><span class="p">(</span><span class="s">FATAL_ERROR</span> <span class="s2">&quot;X11 Xi library is required&quot;</span><span class="p">)</span>
+    <span class="nb">endif</span> <span class="p">()</span>
+<span class="nb">endif</span> <span class="p">()</span>
+
+<span class="nb">if</span> <span class="p">(</span><span class="s">NOT</span> <span class="s">TARGET</span> <span class="s">glad</span> <span class="s">AND</span> <span class="s">EXPECTED_COMPILER</span><span class="p">)</span>
+    <span class="nb">FetchContent_Declare</span><span class="p">(</span><span class="s">glad</span> <span class="s">GIT_REPOSITORY</span> <span class="s">https://github.com/Dav1dde/glad.git</span> <span class="s">GIT_TAG</span> <span class="s">df8e9e16110b305479a875399cee13daa0ccadd9</span><span class="p">)</span>
+    <span class="nb">FetchContent_MakeAvailable</span><span class="p">(</span><span class="s">glad</span><span class="p">)</span>
+<span class="nb">endif</span> <span class="p">()</span>
+
+<span class="nb">if</span> <span class="p">(</span><span class="s">NOT</span> <span class="s">TARGET</span> <span class="s">glfw</span> <span class="s">AND</span> <span class="s">EXPECTED_COMPILER</span><span class="p">)</span>
+    <span class="nb">set</span><span class="p">(</span><span class="s">GLFW_BUILD_DOCS</span> <span class="s">OFF</span> <span class="s">CACHE</span> <span class="s">BOOL</span> <span class="s2">&quot;&quot;</span> <span class="s">FORCE</span><span class="p">)</span>
+    <span class="nb">set</span><span class="p">(</span><span class="s">GLFW_BUILD_EXAMPLES</span> <span class="s">OFF</span> <span class="s">CACHE</span> <span class="s">BOOL</span> <span class="s2">&quot;&quot;</span> <span class="s">FORCE</span><span class="p">)</span>
+    <span class="nb">set</span><span class="p">(</span><span class="s">GLFW_BUILD_TESTS</span> <span class="s">OFF</span> <span class="s">CACHE</span> <span class="s">BOOL</span> <span class="s2">&quot;&quot;</span> <span class="s">FORCE</span><span class="p">)</span>
+    <span class="nb">set</span><span class="p">(</span><span class="s">GLFW_INSTALL</span> <span class="s">OFF</span> <span class="s">CACHE</span> <span class="s">BOOL</span> <span class="s2">&quot;&quot;</span> <span class="s">FORCE</span><span class="p">)</span>
+    <span class="nb">FetchContent_Declare</span><span class="p">(</span><span class="s">glfw</span> <span class="s">GIT_REPOSITORY</span> <span class="s">https://github.com/glfw/glfw.git</span> <span class="s">GIT_TAG</span> <span class="s">3.3.2</span><span class="p">)</span>
+    <span class="nb">FetchContent_MakeAvailable</span><span class="p">(</span><span class="s">glfw</span><span class="p">)</span>
+    <span class="nb">if</span> <span class="p">(</span><span class="s">MSVC</span><span class="p">)</span>
+        <span class="c"># target_compile_options(glfw PRIVATE /Wno-pedantic)</span>
+    <span class="nb">else</span> <span class="p">()</span>
+        <span class="nb">target_compile_options</span><span class="p">(</span><span class="s">glfw</span> <span class="s">PRIVATE</span> <span class="s">-Wno-pedantic</span> <span class="s">-Wno-missing-field-initializers</span> <span class="s">-Wno-unused-parameter</span><span class="p">)</span>
+    <span class="nb">endif</span> <span class="p">()</span>
+<span class="nb">endif</span> <span class="p">()</span>
+
+<span class="nb">set</span><span class="p">(</span><span class="s">GLFW_INSTALL</span> <span class="s">OFF</span> <span class="s">CACHE</span> <span class="s">BOOL</span> <span class="s2">&quot;&quot;</span> <span class="s">FORCE</span><span class="p">)</span>
+
+<span class="nb">FetchContent_Declare</span><span class="p">(</span>
+        <span class="s">imgui</span>
+        <span class="s">GIT_REPOSITORY</span> <span class="s">https://github.com/ocornut/imgui.git</span>
+        <span class="s">GIT_TAG</span> <span class="s">v1.77</span>
+<span class="p">)</span>
+<span class="nb">FetchContent_GetProperties</span><span class="p">(</span><span class="s">imgui</span><span class="p">)</span>
+<span class="nb">if</span> <span class="p">(</span><span class="s">NOT</span> <span class="s">imgui_POPULATED</span><span class="p">)</span>
+    <span class="nb">FetchContent_Populate</span><span class="p">(</span><span class="s">imgui</span><span class="p">)</span>
+    <span class="nb">set</span><span class="p">(</span><span class="s">IMGUI_INCLUDE_DIR</span> <span class="o">${</span><span class="nv">imgui_SOURCE_DIR</span><span class="o">}</span><span class="s">/</span><span class="p">)</span>
+    <span class="nb">file</span><span class="p">(</span><span class="s">GLOB</span> <span class="s">IMGUI_SOURCES</span> <span class="o">${</span><span class="nv">imgui_SOURCE_DIR</span><span class="o">}</span><span class="s">/*.cpp</span><span class="p">)</span>
+    <span class="nb">file</span><span class="p">(</span><span class="s">GLOB</span> <span class="s">IMGUI_HEADERS</span> <span class="o">${</span><span class="nv">imgui_SOURCE_DIR</span><span class="o">}</span><span class="s">/*.h</span><span class="p">)</span>
+    <span class="nb">add_library</span><span class="p">(</span><span class="s">imgui</span> <span class="s">STATIC</span> <span class="o">${</span><span class="nv">IMGUI_SOURCES</span><span class="o">}</span> <span class="o">${</span><span class="nv">IMGUI_SOURCES</span><span class="o">}</span> <span class="o">${</span><span class="nv">imgui_SOURCE_DIR</span><span class="o">}</span><span class="s">/examples/imgui_impl_glfw.cpp</span> <span class="o">${</span><span class="nv">imgui_SOURCE_DIR</span><span class="o">}</span><span class="s">/examples/imgui_impl_opengl3.cpp</span><span class="p">)</span>
+    <span class="nb">add_definitions</span><span class="p">(</span><span class="s">-DIMGUI_IMPL_OPENGL_LOADER_GLAD</span><span class="p">)</span>
+    <span class="nb">target_include_directories</span><span class="p">(</span><span class="s">imgui</span> <span class="s">PUBLIC</span> <span class="o">${</span><span class="nv">IMGUI_INCLUDE_DIR</span><span class="o">}</span> <span class="o">${</span><span class="nv">OPENGL_INCLUDE_DIR</span><span class="o">}</span> <span class="o">${</span><span class="nv">GLFW_INCLUDE_DIR</span><span class="o">}</span> <span class="o">${</span><span class="nv">GLAD_INCLUDE_DIR</span><span class="o">}</span><span class="p">)</span>
+    <span class="nb">target_link_libraries</span><span class="p">(</span><span class="s">imgui</span> <span class="o">${</span><span class="nv">OPENGL_LIBRARIES</span><span class="o">}</span> <span class="s">glfw</span> <span class="s">glad</span><span class="p">)</span>
+<span class="nb">endif</span> <span class="p">()</span>
+
+<span class="nb">if</span> <span class="p">(</span><span class="s">EXPECTED_COMPILER</span><span class="p">)</span>
+    <span class="nb">add_executable</span><span class="p">(</span><span class="s">imgui_hello</span> <span class="s">imgui_hello.cpp</span><span class="p">)</span>
+    <span class="nb">target_link_libraries</span><span class="p">(</span><span class="s">imgui_hello</span> <span class="s">PUBLIC</span> <span class="s">imgui</span><span class="p">)</span>
+<span class="nb">endif</span> <span class="p">()</span>
+</code></pre></div>
+</td></tr></table>
+<!-- Generated with mdsplit: https://github.com/alandefreitas/mdsplit -->
+                
+                  
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
+        
+          <a href="../opengl--glfw/" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+            </div>
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                OpenGL + GLFW
+              </div>
+            </div>
+          </a>
+        
+        
+          <a href="../webview/" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Webview
+              </div>
+            </div>
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            Copyright &copy; 2020 Alan Freitas
+          </div>
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../assets/javascripts/vendor.18f0862e.min.js"></script>
+      <script src="../../assets/javascripts/bundle.994580cf.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
+      
+      <script>
+        app = initialize({
+          base: "../..",
+          features: ['toc.integrate', 'header.autohide'],
+          search: Object.assign({
+            worker: "../../assets/javascripts/worker/search.9c0e82ba.min.js"
+          }, typeof search !== "undefined" && search)
+        })
+      </script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
